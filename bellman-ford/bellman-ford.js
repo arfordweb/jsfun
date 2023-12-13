@@ -1,8 +1,8 @@
 /*
 Terms:
-- vertex - the points on the graph
-    - a.k.a. node
-- edge - the lines connecting them
+- vertex - The points on the graph. A.k.a. "node"
+- edge - A single step in a path that connects two vertices. In this kind of graph, these
+         edges are directional (Ex: from point A to B) and have a numeric distance.
 */
 
 
@@ -37,11 +37,11 @@ interface FullPath {
  * @returns {number} shortest distance between those two points
  */
 function findShortestDistance(nodes, startName, endName) {
-    const distances = {}
+    const pathDistances = {}
     const allEdges = []
     for (let i = 0; i < nodes.length; i++) {
         const { name, edges } = nodes[i]
-        distances[name] = name === startName ? 0 : Number.MAX_SAFE_INTEGER
+        pathDistances[name] = name === startName ? 0 : Number.MAX_SAFE_INTEGER
         allEdges.push(...(
             edges.map((p) => ({
                 ...p,
@@ -53,23 +53,24 @@ function findShortestDistance(nodes, startName, endName) {
     for (let i = 0; i < allEdges.length; i += 1) { // loop same number of times as edges that can be followed
         for (let j = 0; j < allEdges.length; j += 1) { // check all edges
             const { src, dest, dist } = allEdges[j]
-            if (distances[src] < Number.MAX_SAFE_INTEGER) {
+            if (pathDistances[src] < Number.MAX_SAFE_INTEGER) {
                 const newDist = Math.min(
-                    distances[dest],
-                    distances[src] + dist
+                    pathDistances[dest],
+                    pathDistances[src] + dist
                 )
                 // Note that I am modifying the distances directly here, so iterations aren't isolated.
-                // We could end up finding shortest edges before the final iteration because a single
-                // iteration could calculate multiple steps in a path.
-                distances[dest] = Math.min(
-                    distances[dest],
+                // We could end up finding shortest paths before the final iteration because a single
+                // iteration could calculate multiple steps in a path, depending on the order the edges
+                // are considered.
+                pathDistances[dest] = Math.min(
+                    pathDistances[dest],
                     newDist
                 )
             }
         }
     }
 
-    return distances[endName]
+    return pathDistances[endName]
 }
 
 function TEST_findShortestDistance(tree, startName, endName, exp) {
