@@ -30,6 +30,7 @@ interface FullPath {
 /**
  * Given an array of vertices (nodes) in a graph, finds the shortest distance between two vertices.
  * 
+ * Note: Does not detect negative cycles. See README.md
  * 
  * @param {Node[]} nodes 
  * @param {string} startName 
