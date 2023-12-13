@@ -5,6 +5,9 @@ Video: https://www.youtube.com/watch?v=obWXjtg0L64 (not mine)
 Finds the shortest path from one point to another, regardless of whether the vertices
 can be negative.
 
+Negative Cycles
+---------------
+
 Note that this does not handle "negative cycles". A negative cycle is where a path exists from one point
 to itself that has a negative distance. For instance, if you have the following paths:
 
@@ -16,3 +19,8 @@ there in -2 steps. Repeating this path x number of times would give you a path o
 There are algorithms for detecting negative cycles that are not represented here.
 
 More Info: https://en.wikipedia.org/wiki/Bellman%E2%80%93Ford_algorithm
+
+Graph Drawings
+--------------
+
+If you'd like to view the graphs used in the test cases, open `bellman-ford.drawio` using https://draw.io
